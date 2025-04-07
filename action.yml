@@ -1,23 +1,45 @@
-name: Rename me
+name: Secure actionlint
 description: |
-  Template repository for creating Composite Action with GitHub Actions.
+  This action securely runs actionlint in a Docker container to lint GitHub Actions workflow files.
+  It reduces security risks from compromised or malicious third-party tools.
+  To achieve this, it enforces strict container isolation, disables network connections, and drops unnecessary privileges.
 
   ## Usage
 
-  Write usage for your Composite Action.
-
   ```yaml
     steps:
-      - name: Template
-        uses: tmknom/template-composite-action@v0
+      - name: Secure actionlint
+        uses: tmknom/secure-actionlint-action@v0
   ```
 
 runs:
   using: composite
 
   steps:
-    - name: Run
+    - name: Install
+      id: install
       run: |
+        echo "::group::Install"
         set -x
-        echo "Write steps"
+        image="rhysd/actionlint:latest"
+        echo "image=${image}" >> "${GITHUB_OUTPUT}"
+        docker pull "${image}"
+
+        docker run --interactive --rm --read-only --user guest \
+          --security-opt no-new-privileges --cap-drop all --network none \
+          "${image}" --version
+        echo "::endgroup::"
+      shell: bash
+
+    - name: Run
+      env:
+        IMAGE: ${{ steps.install.outputs.image }}
+      run: |
+        echo "::group::Run"
+        set -x
+        docker run --interactive --rm --read-only --user guest \
+          --security-opt no-new-privileges --cap-drop all --network none \
+          --volume "${PWD}:${PWD}" --workdir "${PWD}" \
+          "${IMAGE}" --color
+        echo "::endgroup::"
       shell: bash
