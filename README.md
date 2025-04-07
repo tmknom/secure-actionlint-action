@@ -1,21 +1,21 @@
-# template-composite-action
+# secure-actionlint-action
 
-Template repository for Composite Action.
+Run actionlint in an isolated Docker container to securely lint workflow files.
 
 <!-- actdocs start -->
 
 ## Description
 
-Template repository for creating Composite Action with GitHub Actions.
+This action securely runs actionlint in a Docker container to lint GitHub Actions workflow files.
+It reduces security risks from compromised or malicious third-party tools.
+To achieve this, it enforces strict container isolation, disables network connections, and drops unnecessary privileges.
 
 ## Usage
 
-Write usage for your Composite Action.
-
 ```yaml
   steps:
-    - name: Template
-      uses: tmknom/template-composite-action@v0
+    - name: Secure actionlint
+      uses: tmknom/secure-actionlint-action@v0
 ```
 
 ## Inputs
@@ -44,4 +44,4 @@ N/A
 
 See [GitHub Releases][releases].
 
-[releases]: https://github.com/tmknom/template-composite-action/releases
+[releases]: https://github.com/tmknom/secure-actionlint-action/releases
