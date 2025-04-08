@@ -7,7 +7,7 @@ Run [actionlint][actionlint] in an isolated Docker container to securely lint wo
 ## Description
 
 This action securely runs actionlint in a Docker container to lint GitHub Actions workflow files.
-It reduces security risks from compromised or malicious third-party tools.
+It reduces security risks from compromised or malicious third-party tools (e.g., compromised repositories or tampered container images).
 To achieve this, it enforces strict container isolation, disables network connections, and drops unnecessary privileges.
 
 ## Usage
