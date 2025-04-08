@@ -1,6 +1,6 @@
 # secure-actionlint-action
 
-Run actionlint in an isolated Docker container to securely lint workflow files.
+Run [actionlint][actionlint] in an isolated Docker container to securely lint workflow files.
 
 <!-- actdocs start -->
 
