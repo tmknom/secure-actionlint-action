@@ -21,7 +21,7 @@ runs:
       run: |
         echo "::group::Install"
         set -x
-        image="rhysd/actionlint:latest"
+        image="$(head -1 "${GITHUB_ACTION_PATH}/Dockerfile" | cut -d' ' -f2)"
         echo "image=${image}" >> "${GITHUB_OUTPUT}"
         docker pull "${image}"
       shell: bash
