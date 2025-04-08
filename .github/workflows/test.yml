@@ -66,6 +66,8 @@ jobs:
           set -x
           cat <<EOF > ".github/workflows/${GITHUB_JOB}_${GITHUB_RUN_ID}.yml"
           name: invalid
+          on:
+            workflow_dispatch:
           EOF
 
       - name: Exercise
