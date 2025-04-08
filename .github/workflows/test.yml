@@ -81,3 +81,49 @@ jobs:
         run: |
           set -x
           test "${OUTCOME}" = "failure"
+
+  test-configuration-path:
+    name: Test configuration-path
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: tmknom/checkout-action@v1
+
+      - name: Setup
+        id: setup
+        run: |
+          set -x
+          workflow_file=".github/workflows/${GITHUB_JOB}_${GITHUB_RUN_ID}.yml"
+          rm -f "${workflow_file}"
+          cat <<EOF > "${workflow_file}"
+          name: invalid
+          on:
+            workflow_dispatch:
+          EOF
+
+          config_file="actionlint.yml"
+          rm -f "${config_file}"
+          cat <<EOF >"${config_file}"
+          paths:
+            ${workflow_file}:
+              ignore:
+                - '"jobs" section is missing in workflow'
+          EOF
+          echo "path=${config_file}" >> "${GITHUB_OUTPUT}"
+
+      - name: Exercise
+        id: exercise
+        uses: ./
+        with:
+          configuration-path: ${{ steps.setup.outputs.path }}
+        continue-on-error: true
+
+      - name: Verify
+        env:
+          OUTCOME: ${{ steps.exercise.outcome }}
+        run: |
+          set -x
+          test "${OUTCOME}" = "success"

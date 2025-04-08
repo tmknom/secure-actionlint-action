@@ -20,7 +20,9 @@ To achieve this, it enforces strict container isolation, disables network connec
 
 ## Inputs
 
-N/A
+| Name | Description | Default | Required |
+| :--- | :---------- | :------ | :------: |
+| configuration-path | The path for the actionlint configurations. | n/a | no |
 
 ## Outputs
 
