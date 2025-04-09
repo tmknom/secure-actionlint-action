@@ -12,6 +12,11 @@ description: |
         uses: tmknom/secure-actionlint-action@v0
   ```
 
+inputs:
+  configuration-path:
+    required: false
+    description: The path for the actionlint configurations.
+
 runs:
   using: composite
 
@@ -40,13 +45,19 @@ runs:
 
     - name: Run
       env:
+        CONFIG_PATH: ${{ inputs.configuration-path }}
         IMAGE: ${{ steps.install.outputs.image }}
       run: |
         echo "::group::Run"
         set -x
+        declare -a flags=(-color)
+        if [[ "${CONFIG_PATH}" != "" ]]; then
+          flags+=(-config-file "${CONFIG_PATH}")
+        fi
+
         docker run --interactive --rm --read-only --user guest \
           --security-opt no-new-privileges --cap-drop all --network none \
           --volume "${PWD}:${PWD}" --workdir "${PWD}" \
-          "${IMAGE}" --color
+          "${IMAGE}" "${flags[@]}"
         echo "::endgroup::"
       shell: bash
