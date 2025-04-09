@@ -48,8 +48,10 @@ This action significantly reduces such risks by strictly isolating the environme
 
 - Network access is completely disabled (`--network none`)
 - All unnecessary Linux capabilities are dropped (`--cap-drop all`)
-- The action runs as a non-root, restricted user  (`guest`)
+- Privilege escalation is explicitly disabled (`--security-opt no-new-privileges`)
+- The action runs as a non-root, restricted user  (`--user guest`)
 - The filesystem is strictly read-only (`--read-only`)
+- The repository directory is mounted as read-only (`--volume "${PWD}:${PWD}:ro"`)
 
 ### What specific security risks does this action protect against?
 
