@@ -67,7 +67,7 @@ Even if the tool were compromised or contained malicious code, disabling network
 
 ### Does this action run with elevated (root) privileges?
 
-No. The action runs as a non-root, restricted user (`guest`) without privilege escalation.
+No. The action runs as a non-root, restricted user without privilege escalation.
 
 ### Can I customize the actionlint parameters?
 
