@@ -69,8 +69,17 @@ No. The action runs as a non-root, restricted user (`guest`) without privilege e
 
 ### Can I customize the actionlint parameters?
 
-Currently, the action supports only default parameters.
-Customizing parameters would require you to fork and modify the action according to your needs.
+Yes. You can specify a custom configuration file for actionlint with the `configuration-path` input.
+
+**Example usage:**
+
+```yaml
+- uses: tmknom/secure-actionlint-action@v0
+  with:
+    configuration-path: path/to/your/actionlint.yaml
+```
+
+If this input is omitted, actionlint will run with its default settings.
 
 ### Does using this action significantly impact my CI/CD performance?
 
