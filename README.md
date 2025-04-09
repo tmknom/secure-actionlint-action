@@ -80,6 +80,7 @@ Yes. You can specify a custom configuration file for actionlint with the `config
 ```
 
 If this input is omitted, actionlint will run with its default settings.
+For details on how to create a configuration file, see [actionlint's configuration documentation](https://github.com/rhysd/actionlint/blob/main/docs/config.md).
 
 ### Does using this action significantly impact my CI/CD performance?
 
