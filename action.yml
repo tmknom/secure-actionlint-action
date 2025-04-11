@@ -46,12 +46,12 @@ runs:
         echo "::endgroup::"
       shell: bash
 
-    - name: Run
+    - name: Lint
       env:
         CONFIG_PATH: ${{ inputs.configuration-path }}
         IMAGE: ${{ steps.install.outputs.image }}
       run: |
-        echo "::group::Run"
+        echo "::group::Lint"
         set -x
         declare -a flags=(-color)
         if [[ "${CONFIG_PATH}" != "" ]]; then
