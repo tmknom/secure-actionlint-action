@@ -127,3 +127,38 @@ jobs:
         run: |
           set -x
           test "${OUTCOME}" = "success"
+
+  test-ignore:
+    name: Test ignore
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: tmknom/checkout-action@v1
+
+      - name: Setup
+        id: setup
+        run: |
+          set -x
+          workflow_file=".github/workflows/${GITHUB_JOB}_${GITHUB_RUN_ID}.yml"
+          rm -f "${workflow_file}"
+          cat <<EOF > "${workflow_file}"
+          name: invalid
+          EOF
+
+      - name: Exercise
+        id: exercise
+        uses: ./
+        with:
+          ignore: |-
+            "jobs" section is missing in workflow
+            "on" section is missing .+
+
+      - name: Verify
+        env:
+          OUTCOME: ${{ steps.exercise.outcome }}
+        run: |
+          set -x
+          test "${OUTCOME}" = "success"

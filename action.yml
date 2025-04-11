@@ -16,6 +16,9 @@ inputs:
   configuration-path:
     required: false
     description: The path for the actionlint configurations.
+  ignore:
+    required: false
+    description: Specify regular expressions to ignore actionlint error messages, one per line.
 
 runs:
   using: composite
@@ -50,12 +53,20 @@ runs:
       env:
         CONFIG_PATH: ${{ inputs.configuration-path }}
         IMAGE: ${{ steps.install.outputs.image }}
+        IGNORE: ${{ inputs.ignore }}
       run: |
         echo "::group::Lint"
         set -x
         declare -a flags=(-color)
         if [[ "${CONFIG_PATH}" != "" ]]; then
           flags+=(-config-file "${CONFIG_PATH}")
+        fi
+
+        if [[ "${IGNORE}" != "" ]]; then
+          while IFS= read -r regex; do
+            [[ "${regex}" == "" ]] && continue
+            flags+=("-ignore" "${regex}")
+          done <<<"${IGNORE}"
         fi
 
         docker run --interactive --rm --read-only --user guest \

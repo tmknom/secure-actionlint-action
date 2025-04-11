@@ -23,6 +23,7 @@ To achieve this, it enforces strict container isolation, disables network connec
 | Name | Description | Default | Required |
 | :--- | :---------- | :------ | :------: |
 | configuration-path | The path for the actionlint configurations. | n/a | no |
+| ignore | Specify regular expressions to ignore actionlint error messages, one per line. | n/a | no |
 
 ## Outputs
 
