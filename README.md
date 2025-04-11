@@ -12,10 +12,25 @@ To achieve this, it enforces strict container isolation, disables network connec
 
 ## Usage
 
+### Default
+
 ```yaml
   steps:
     - name: Secure actionlint
       uses: tmknom/secure-actionlint-action@v0
+```
+
+### Custom
+
+```yaml
+  steps:
+    - name: Secure actionlint
+      uses: tmknom/secure-actionlint-action@v0
+      with:
+        configuration-path: actionlint.yml
+        ignore: |-
+          "jobs" section is missing in workflow
+          "on" section is missing .+
 ```
 
 ## Inputs
