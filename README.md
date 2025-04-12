@@ -97,7 +97,7 @@ Doing so ensures the immutability of both the action’s code and any resources 
 **Recommended (more secure):**
 
 ```yaml
-- uses: tmknom/secure-actionlint-action@319c663fe7a559d2bf907b36a8edfd80b89508b6
+- uses: tmknom/secure-actionlint-action@319c663fe7a559d2bf907b36a8edfd80b89508b6 # v0.3.0
 ```
 
 **Not recommended:**
