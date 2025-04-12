@@ -113,18 +113,16 @@ Doing so ensures the immutability of both the action’s code and any resources 
 
 ### Can I customize the actionlint parameters?
 
-Yes. You can specify a custom configuration file for actionlint with the `configuration-path` input.
+Yes. You can customize actionlint parameters through the inputs described in the [Inputs](#inputs) section.
+See [Custom Usage](#usage) for an example.
 
-**Example usage:**
+For more details on configuring actionlint, refer to the official documentation:
 
-```yaml
-- uses: tmknom/secure-actionlint-action@v0
-  with:
-    configuration-path: path/to/your/actionlint.yaml
-```
+- `configuration-path` input: [Configuration of actionlint](https://github.com/rhysd/actionlint/blob/main/docs/config.md)
+- `ignore` input: [All checks done by actionlint](https://github.com/rhysd/actionlint/blob/main/docs/checks.md)
 
-If this input is omitted, actionlint will run with its default settings.
-For details on how to create a configuration file, see [actionlint's configuration documentation](https://github.com/rhysd/actionlint/blob/main/docs/config.md).
+This action intentionally limits arbitrary customization to ensure secure, isolated, and predictable execution.
+If you require further customization, consider creating your own fork of this action.
 
 ### Does using this action significantly impact my CI/CD performance?
 
