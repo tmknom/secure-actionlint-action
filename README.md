@@ -87,6 +87,25 @@ Even if the tool were compromised or contained malicious code, disabling network
 
 No. The action runs as a non-root, restricted user without privilege escalation.
 
+### Should I pin this action using a commit SHA?
+
+**Yes, strongly recommended.**
+
+To further protect your workflows from unintended or malicious modifications, it's a best practice to pin the action to a specific commit SHA (commit hash).
+Doing so ensures the immutability of both the action’s code and any resources it references, such as Docker images, further reducing the risk of software supply chain attacks.
+
+**Recommended (more secure):**
+
+```yaml
+- uses: tmknom/secure-actionlint-action@319c663fe7a559d2bf907b36a8edfd80b89508b6
+```
+
+**Not recommended:**
+
+```yaml
+- uses: tmknom/secure-actionlint-action@v0
+```
+
 ### Can I customize the actionlint parameters?
 
 Yes. You can specify a custom configuration file for actionlint with the `configuration-path` input.
