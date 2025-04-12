@@ -19,7 +19,7 @@ To achieve this, it enforces strict container isolation, disables network connec
 ```yaml
   steps:
     - name: Secure actionlint
-      uses: tmknom/secure-actionlint-action@v0
+      uses: tmknom/secure-actionlint-action@319c663fe7a559d2bf907b36a8edfd80b89508b6 # v0.3.0
 ```
 
 ### Custom
@@ -27,7 +27,7 @@ To achieve this, it enforces strict container isolation, disables network connec
 ```yaml
   steps:
     - name: Secure actionlint
-      uses: tmknom/secure-actionlint-action@v0
+      uses: tmknom/secure-actionlint-action@319c663fe7a559d2bf907b36a8edfd80b89508b6 # v0.3.0
       with:
         configuration-path: actionlint.yml
         ignore: |-
