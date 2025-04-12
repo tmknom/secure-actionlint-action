@@ -42,7 +42,6 @@ jobs:
       - name: Exercise
         id: exercise
         uses: ./
-        continue-on-error: true
 
       - name: Verify
         env:
@@ -119,7 +118,6 @@ jobs:
         uses: ./
         with:
           configuration-path: ${{ steps.setup.outputs.path }}
-        continue-on-error: true
 
       - name: Verify
         env:
