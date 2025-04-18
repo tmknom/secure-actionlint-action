@@ -2,8 +2,6 @@
 
 Run [actionlint][actionlint] in an isolated Docker container to securely lint workflow files.
 
-<!-- actdocs start -->
-
 ## Description
 
 This action securely runs actionlint in a Docker container to lint GitHub Actions workflow files.
@@ -35,6 +33,8 @@ To achieve this, it enforces strict container isolation, disables network connec
           "on" section is missing .+
 ```
 
+<!-- actdocs inputs start -->
+
 ## Inputs
 
 | Name | Description | Default | Required |
@@ -42,11 +42,15 @@ To achieve this, it enforces strict container isolation, disables network connec
 | configuration-path | The path for the actionlint configurations. | n/a | no |
 | ignore | Specify regular expressions to ignore actionlint error messages, one per line. | n/a | no |
 
+<!-- actdocs inputs end -->
+
+<!-- actdocs outputs start -->
+
 ## Outputs
 
 N/A
 
-<!-- actdocs end -->
+<!-- actdocs outputs end -->
 
 ## Permissions
 
