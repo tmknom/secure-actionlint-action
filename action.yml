@@ -65,3 +65,7 @@ runs:
           "${IMAGE}" "${flags[@]}"
         echo "::endgroup::"
       shell: bash
+
+branding:
+  icon: check
+  color: purple
