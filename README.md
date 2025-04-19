@@ -17,7 +17,7 @@ To achieve this, it enforces strict container isolation, disables network connec
 ```yaml
   steps:
     - name: Secure actionlint
-      uses: tmknom/secure-actionlint-action@319c663fe7a559d2bf907b36a8edfd80b89508b6 # v0.3.0
+      uses: tmknom/secure-actionlint-action@23ef4b1bfd498bb9fadbfeab1d881c565f6ee36f # v0.3.1
 ```
 
 ### Custom
@@ -25,7 +25,7 @@ To achieve this, it enforces strict container isolation, disables network connec
 ```yaml
   steps:
     - name: Secure actionlint
-      uses: tmknom/secure-actionlint-action@319c663fe7a559d2bf907b36a8edfd80b89508b6 # v0.3.0
+      uses: tmknom/secure-actionlint-action@23ef4b1bfd498bb9fadbfeab1d881c565f6ee36f # v0.3.1
       with:
         configuration-path: actionlint.yml
         ignore: |-
@@ -106,7 +106,7 @@ Doing so ensures the immutability of both the action’s code and any resources 
 **Recommended (more secure):**
 
 ```yaml
-- uses: tmknom/secure-actionlint-action@319c663fe7a559d2bf907b36a8edfd80b89508b6 # v0.3.0
+- uses: tmknom/secure-actionlint-action@23ef4b1bfd498bb9fadbfeab1d881c565f6ee36f # v0.3.1
 ```
 
 **Not recommended:**
