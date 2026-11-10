@@ -71,9 +71,12 @@ This action significantly reduces such risks by strictly isolating the environme
 - Network access is completely disabled (`--network none`)
 - All unnecessary Linux capabilities are dropped (`--cap-drop all`)
 - Privilege escalation is explicitly disabled (`--security-opt no-new-privileges`)
-- The action runs as a non-root, restricted user  (`--user guest`)
-- The filesystem is strictly read-only (`--read-only`)
+- The action runs as a non-root, restricted user (`--user 65534:65534`)
+- The filesystem is strictly read-only (`--read-only`), with only a non-executable scratch area at `/tmp` (`--tmpfs /tmp:rw,noexec,nosuid,nodev`)
 - The repository directory is mounted as read-only (`--volume "${PWD}:${PWD}:ro"`)
+- Every `.git` under the repository directory is hidden, so credentials persisted by `actions/checkout` cannot be read
+- Only the image pinned by digest is used, and it is never pulled at run time (`--pull never`)
+- IPC is isolated, core dumps are disabled, and memory and process counts are bounded (`--ipc none`, `--ulimit core=0`, `--memory`, `--pids-limit`)
 
 ### What specific security risks does this action protect against?
 
@@ -81,6 +84,7 @@ This action specifically prevents threats related to software supply chain secur
 
 - Unauthorized outbound connections from runners, significantly reducing the risk of data leakage
 - Malicious updates or compromised tools exploiting elevated privileges or unrestricted network access
+- Theft of credentials persisted in `.git` by `actions/checkout`, such as the `GITHUB_TOKEN`
 
 ### How does this action ensure the Docker image used for actionlint is secure?
 
