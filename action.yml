@@ -33,8 +33,10 @@ runs:
       run: |
         echo "::group::Show version"
         set -x
-        docker run --interactive --rm --read-only --user guest \
+        docker run --rm --pull never --read-only --user 65534:65534 \
           --security-opt no-new-privileges --cap-drop all --network none \
+          --ipc none --ulimit core=0 --init \
+          --memory 1g --memory-swap 1g --pids-limit 256 \
           "${IMAGE}" --version
         echo "::endgroup::"
       shell: bash
@@ -59,9 +61,33 @@ runs:
           done <<<"${IGNORE}"
         fi
 
-        docker run --interactive --rm --read-only --user guest \
+        # Hide every .git under the workspace, including repositories checked out with `path:`,
+        # so that credentials persisted by actions/checkout cannot be read.
+        # Write the list to a file rather than reading a process substitution,
+        # so that a failing find aborts the step instead of leaving some .git exposed.
+        git_list="$(mktemp)"
+        find "${PWD}" -name .git \( -type d -o -type f \) -prune -print0 >"${git_list}"
+
+        # actionlint only checks that .git exists (directory or file) to detect the project root,
+        # so cover a directory with an empty read-only tmpfs and a file with /dev/null.
+        declare -a hide_git=()
+        while IFS= read -r -d '' git_path; do
+          # --mount parses its value as CSV, so quote the destination to keep a comma or
+          # double quote in the path, such as a submodule path from .gitmodules, from injecting options.
+          printf -v destination '"destination=%s"' "${git_path//\"/\"\"}"
+          if [[ -d "${git_path}" ]]; then
+            hide_git+=(--mount "type=tmpfs,${destination},tmpfs-size=1k,readonly")
+          else
+            hide_git+=(--mount "type=bind,source=/dev/null,${destination},readonly")
+          fi
+        done <"${git_list}"
+
+        docker run --rm --pull never --read-only --user 65534:65534 \
           --security-opt no-new-privileges --cap-drop all --network none \
-          --volume "${PWD}:${PWD}:ro" --workdir "${PWD}" \
+          --ipc none --ulimit core=0 --init \
+          --memory 1g --memory-swap 1g --pids-limit 256 \
+          --tmpfs /tmp:rw,noexec,nosuid,nodev,size=64m --env HOME=/tmp \
+          --volume "${PWD}:${PWD}:ro" "${hide_git[@]}" --workdir "${PWD}" \
           "${IMAGE}" "${flags[@]}"
         echo "::endgroup::"
       shell: bash
